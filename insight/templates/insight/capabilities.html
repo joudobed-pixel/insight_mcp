@@ -1,0 +1,39 @@
+{% extends "insight/base.html" %}
+{% block title %}MCP Capabilities · Insight{% endblock %}
+{% block nav_caps %}on{% endblock %}
+{% block content %}
+<h1>MCP server capabilities</h1>
+<p class="lead">Discovered live from the MCP server with <code>list_tools()</code>, <code>list_resources()</code> and <code>list_prompts()</code>.</p>
+
+{% if caps %}
+<div class="card">
+  <h2><span class="type t-Tool">TOOLS</span> Executable operations ({{ caps.tools|length }})</h2>
+  <table>
+    <tr><th>Name</th><th>Description</th><th>Parameters</th></tr>
+    {% for t in caps.tools %}
+      <tr><td><code>{{ t.name }}</code></td><td>{{ t.description }}</td><td>{{ t.parameters|join:", " }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h2><span class="type t-Resource">RESOURCES</span> Read-only reference data ({{ caps.resources|length }})</h2>
+  <table>
+    <tr><th>URI</th><th>Description</th></tr>
+    {% for r in caps.resources %}
+      <tr><td><code>{{ r.uri }}</code></td><td>{{ r.description }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h2><span class="type t-Prompt">PROMPTS</span> Reusable templates ({{ caps.prompts|length }})</h2>
+  <table>
+    <tr><th>Name</th><th>Description</th><th>Arguments</th></tr>
+    {% for p in caps.prompts %}
+      <tr><td><code>{{ p.name }}</code></td><td>{{ p.description }}</td><td>{{ p.arguments|join:", "|default:"—" }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}

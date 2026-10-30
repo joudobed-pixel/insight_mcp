@@ -1,0 +1,41 @@
+{% extends "insight/base.html" %}
+{% block title %}Compare Branches · Insight{% endblock %}
+{% block nav_cmp %}on{% endblock %}
+{% block content %}
+<h1>Compare branches</h1>
+<p class="lead">Ranking produced by the <code>compare_branches</code> MCP tool.</p>
+
+<div class="card">
+  <form method="get" class="inline">
+    <div>
+      <label for="survey">Survey</label>
+      <select name="survey" id="survey">
+        <option value="">All surveys</option>
+        {% for s in surveys %}
+          <option value="{{ s.id }}" {% if s.id == selected_survey %}selected{% endif %}>{{ s.period }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit">Compare</button>
+  </form>
+</div>
+
+{% if result %}
+<div class="card">
+  <table>
+    <tr><th>Rank</th><th>Branch</th><th>Responses</th><th>Avg rating</th><th>Satisfaction</th><th>NPS</th><th></th></tr>
+    {% for row in result.ranking %}
+      <tr>
+        <td><b>#{{ row.rank }}</b></td>
+        <td>{{ row.branch }}</td>
+        <td>{{ row.responses }}</td>
+        <td>{{ row.avg_rating }}</td>
+        <td>{{ row.satisfaction_pct }}% <span class="tag {{ row.satisfaction_level }}">{{ row.satisfaction_level }}</span></td>
+        <td>{{ row.nps }} <span class="tag {{ row.nps_level }}">{{ row.nps_level }}</span></td>
+        <td><a href="{% url 'dashboard' %}?branch={{ row.branch_id }}{% if selected_survey %}&survey={{ selected_survey }}{% endif %}">Analyze →</a></td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}

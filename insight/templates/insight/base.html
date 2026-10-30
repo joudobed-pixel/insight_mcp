@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Insight MCP{% endblock %}</title>
+  <style>
+    :root { --ink:#1d2433; --muted:#5f6b7a; --line:#dfe4ea; --bg:#f5f7fa; --brand:#1d4e89; --good:#1f8a4c; --mid:#c48a00; --bad:#c0392b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: "Segoe UI", system-ui, sans-serif; color:var(--ink); background:var(--bg); }
+    header { background:var(--brand); color:#fff; }
+    .bar { max-width:1060px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
+    .logo { font-weight:700; font-size:20px; letter-spacing:.3px; }
+    .logo small { font-weight:400; opacity:.8; font-size:13px; margin-left:6px; }
+    nav a { color:#fff; text-decoration:none; margin-right:18px; opacity:.85; }
+    nav a:hover, nav a.on { opacity:1; border-bottom:2px solid #fff; padding-bottom:2px; }
+    main { max-width:1060px; margin:0 auto; padding:24px 20px 48px; }
+    h1 { font-size:24px; margin:0 0 4px; }
+    .lead { color:var(--muted); margin:0 0 20px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:18px; }
+    .card h2 { font-size:17px; margin:0 0 12px; }
+    form.inline { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
+    label { font-size:13px; color:var(--muted); display:block; margin-bottom:4px; }
+    select, button { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:#fff; }
+    button { background:var(--brand); color:#fff; border-color:var(--brand); cursor:pointer; padding:8px 18px; }
+    .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+    .kpi { border:1px solid var(--line); border-radius:8px; padding:14px; }
+    .kpi .label { font-size:13px; color:var(--muted); }
+    .kpi .value { font-size:28px; font-weight:700; margin:4px 0; }
+    .tag { display:inline-block; font-size:12px; padding:2px 8px; border-radius:20px; color:#fff; }
+    .Excellent { background:var(--good); } .Good { background:#3a9d5d; }
+    .Needs { background:var(--mid); } .Critical { background:var(--bad); } .No { background:#888; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); }
+    th { background:#eef2f7; font-weight:600; }
+    pre { background:#f0f3f7; border-radius:6px; padding:12px; white-space:pre-wrap; font-size:13px; margin:0; }
+    .alert { background:#fdecea; color:var(--bad); border:1px solid #f5c2bd; padding:12px 14px; border-radius:8px; margin-bottom:16px; }
+    .priority { background:#fff4e0; border:1px solid #f0d199; color:#8a5a00; padding:10px 14px; border-radius:8px; margin-bottom:14px; }
+    .type { font-size:11px; font-weight:700; padding:2px 7px; border-radius:4px; color:#fff; }
+    .t-Tool { background:#1d4e89; } .t-Resource { background:#1f8a4c; } .t-Prompt { background:#8e44ad; }
+    ul { margin:0; padding-left:20px; } li { margin-bottom:6px; }
+    code { background:#eef2f7; padding:1px 5px; border-radius:4px; font-size:13px; }
+    footer { text-align:center; color:var(--muted); font-size:12px; padding:20px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo">Insight <small>Survey Analytics · MCP</small></div>
+    <nav>
+      <a href="{% url 'dashboard' %}" class="{% block nav_dash %}{% endblock %}">Analyze Branch</a>
+      <a href="{% url 'compare' %}" class="{% block nav_cmp %}{% endblock %}">Compare Branches</a>
+      <a href="{% url 'capabilities' %}" class="{% block nav_caps %}{% endblock %}">MCP Capabilities</a>
+      <a href="/api/">API</a>
+      <a href="/admin/">Admin</a>
+    </nav>
+  </div>
+</header>
+<main>
+  {% if error %}<div class="alert">{{ error }}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Insight MCP · Django + Django REST Framework + Model Context Protocol · demo data</footer>
+</body>
+</html>
